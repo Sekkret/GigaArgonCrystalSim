@@ -1,0 +1,21 @@
+#!/bin/bash -l
+#PBS -N argon.cu
+## NOTE: nodes have 20 physical cores and 40 virtual cores
+##       To allocate whole node you need to ask for ppn=40
+#PBS -l nodes=node2068.grid4cern.if.pw.edu.pl
+#PBS -l walltime=0:10:00
+#PBS -j oe
+
+## ------ QUEUE SYSTEM ------
+## For submission use:
+##      qsub job.dwarf
+## For checking status use:
+##      qstat
+## To kill job use:
+##      qdel jobid
+
+# go to submission folder
+cd $PBS_O_WORKDIR/
+
+# and run commands
+./argon parameters.config energies.out xyz.out > output.out

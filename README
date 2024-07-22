@@ -1,0 +1,53 @@
+### Giga Argon Crystal Simulation ###
+
+This is a final project for HPC classes. It is a molecular dynamics simulation of an argon crystal larger than the one from KMS classes. Can we simulate a crystal big enough so that the melting temperature will no longer be dependent on temperature?
+
+The program uses GPU and was written for execution on the DWARF supercomputer from the Faculty of Physics, WuT. For more information about how the program works, see the attached PDF files: report.pdf containing the report from the project and KMS_lab.pdf explaining the math behind the simulation.
+
+
+### How to run the program? ###
+
+1) Connect to DWARF.
+2) Go to ssh68.
+3) Compile the program with the command:
+    nvcc argon.cu CFG/cfg_parse.c -o argon -lm -lcudart --expt-relaxed-constexpr
+4) Prepare the configuration file. (More information below)
+5) Run the program with the command:
+    ./argon <config_file> <parameters_output> <atoms positions output>
+
+
+### Results: ###
+
+Results of computations are stored in two files.
+
+<atoms positions output>
+This file contains atom positions saved at regular intervals. The file is ready to be opened with JMol (https://jmol.sourceforge.net/) and run as an animation.
+
+<parameters_output>
+This file stores the calculated macroscopic parameters of the simulated system: temperature T, pressure P, total energy E, potential V, and kinetic energy Ek. The parameters are saved at regular intervals.
+
+
+### Configuration file ###
+The configuration file stores variables necessary to run the simulation. All the following quantities have to be present in the configuration file.
+Meaning of the parameters in the configuration file:
+n - number of atoms on the edge of a crystal
+m - mass of an atom [u]
+e - i.e. epsilon is a constant for potential: -epsilon is the minimal potential
+R - crystal lattice constant
+f - elasticity coefficient
+a - initial distance between atoms
+T_0 - temperature for the Maxwell distribution of velocities
+tau - time step
+S - number of steps for thermalization
+S_out - number of steps after which the macroscopic parameters are recorded
+S_xyz - number of steps after which the positions of atoms are recorded
+
+
+### Author ###
+The program is written by Bartłomiej Baur.
+It's free to use under the public domain.
+
+### References ###
+This program uses cfg_parse library prepared by Greg Kennedy:
+https://greg-kennedy.com/wordpress/2012/07/06/cfg_parse-simple-config-file-parser-in-c/
+More information about the library you can find in its README located in folder CFG.
